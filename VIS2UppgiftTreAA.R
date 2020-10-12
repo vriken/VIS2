@@ -58,7 +58,7 @@ ggplot(data = data,
   # denna skala använder sig av en statisk 0.75cm storlek, detta kan vara problematiskt om man ska visa grafen på en väldigt stor skärm
   
   geom_line() +  # denna rad ritar ut grafen
-  scale_x_date(date_breaks = "3 weeks", date_labels = "%Y-%m-%d", name = "Datum") #
+  scale_x_date(date_breaks = "3 weeks", date_labels = "%Y-%m-%d", name = "Datum visat för var tredje vecka") #
 #denna rad ändrar ticksen för x skalan så att den visar datum för varannan vecka i formatet YYYY-MM-DD
 #den ändrar också namnet för x axeln så att den är "Datum
 
