@@ -1,44 +1,45 @@
 library("ggplot2")
 library("reshape2")
 library("dplyr")
-#här inkluderar vi lite diverse bibliotek
-lur <-read.csv("VIS2 COVID-19.csv")
-setwd("E:/Downloads/")
-#här ändrar vi working directoryt
+#hÃ¤r inkluderar vi lite diverse bibliotek
+setwd("C:/Users/vrike/Downloads")
+#hÃ¤r Ã¤ndrar vi working directoryt
 data <- read.csv("VIS2 COVID-19.csv")
-#här skapar vi ett dataobjekt med namnet data, som läser av datafilen VIS2 COVID19.....
+#hÃ¤r skapar vi ett dataobjekt med namnet data, som lÃ¤ser av datafilen VIS2 COVID19.....
 #med read.csv() funktionen
 data <- melt(data,
+             id.vars = "Statistikdatum",
              variable.name = "Plats",
              value.name = "Totalt")
-#här manipulerar vi dataobjektet genom att använda melt() funktionen, som gör datan till en long
-#Detta behöver vi göra för att sammanfoga Stockholms-och-Östergötlandskolumnerna.
-#Sen sätter vi namn för de olika kolumerna, vi sätter namnet för denna sammanfogade kolumn till
-#Plats. Vi skapar också ett nytt namn för Totalt_antal_fall som blir "Totalt"
+#hÃ¤r manipulerar vi dataobjektet genom att anvÃ¤nda melt() funktionen, som gÃ¶r datan till en long
+#Detta behÃ¶ver vi gÃ¶ra fÃ¶r att sammanfoga Stockholms-och-Ã–stergÃ¶tlandskolumnerna.
+#Sen sÃ¤tter vi namn fÃ¶r de olika kolumerna, vi sÃ¤tter namnet fÃ¶r denna sammanfogade kolumn till
+#Plats. Vi skapar ocksÃ¥ ett nytt namn fÃ¶r Totalt_antal_fall som blir "Totalt"
 data <- filter(data, Plats != "Totalt_antal_fall")
-#denna rad tar bort alla Platser i datan med namnet "Totalt_antal_fall, eftersom detta inte söks
-#i grafen
+#denna rad tar bort alla Platser i datan med namnet "Totalt_antal_fall, eftersom detta inte sÃ¶ks
+#i grafen 
 ggplot(data = data,
-       aes(x = as.Date(Statistikdatum),
+       aes(x = as.Date(Statistikdatum, tryFormats = c("%d/%m/%y")), # jag behÃ¶vde lÃ¤gga till ett explicit sÃ¤tt att kolla fÃ¶r vilket format fÃ¶r att anvÃ¤nda scale_x_date
            y = Totalt,
            group = Plats,
            color = Plats)
 ) +
-  #här skapar vi ett ggplot objekt som använder sig av datafilen som är modifierad.
-  #vi definerar också aes'en så att den använder sig av statistikdatum som x värde, som använder sig av
-  #as.Date() funktionen som gör så att vi kan använda scale_x_date() funktionen på rad 47.
-  #Totalt, som y värde. Group som Plats, och färger som Plats
-  labs(caption = "Källa: Folkhälsomyndigheten", # detta lägger till en footnote
-       subtitle = "Med regionerna Stockholm, och Östergötland", # detta lägger till och ändrar subtiteln för grafen
-       title = "Jämförelse av olika regioners COVID-19 utveckling" # dettalägger till och ändrar titeln för grafen
+  #hÃ¤r skapar vi ett ggplot objekt som anvÃ¤nder sig av datafilen som Ã¤r modifierad.
+  #vi definerar ocksÃ¥ aes'en sÃ¥ att den anvÃ¤nder sig av statistikdatum som x vÃ¤rde, som anvÃ¤nder sig av
+  #as.Date() funktionen som gÃ¶r sÃ¥ att vi kan anvÃ¤nda scale_x_date() funktionen pÃ¥ rad 47.
+  #Totalt, som y vÃ¤rde. Group som Plats, och fÃ¤rger som Plats
+  labs(caption = "KÃ¤lla: FolkhÃ¤lsomyndigheten", # detta lÃ¤gger till en footnote
+       subtitle = "Med regionerna Stockholm, och Ã–stergÃ¶tland", # detta lÃ¤gger till och Ã¤ndrar subtiteln fÃ¶r grafen
+       title = "JÃ¤mfÃ¶relse av olika regioners COVID-19 utveckling" # dettalÃ¤gger till och Ã¤ndrar titeln fÃ¶r grafen
   ) +
   
-  ylab("Totalt antal COVID-19 fall" # detta ändrar y-axelns text
+  ylab("Totalt antal \nCOVID-19 fall" # detta Ã¤ndrar y-axelns text
   ) +
   
-  theme(axis.text.x = element_text(angle = 25,
-                                   vjust = 0.5),
-        axis.title.y = element_text(angle = 25,
+  theme(axis.text.x = element_text(angle = 35,
+                                   vjust = 0.5,
+                                   size = 11),
+        axis.title.y = element_text(angle = 0,
                                     vjust = 0.5,
                                     size = 14),
         legend.title = element_text(size = 14,),
@@ -46,14 +47,16 @@ ggplot(data = data,
         legend.key.size = unit(0.75, "cm")
   ) +
   
-  # Theme raderna ändrar attributerna för x axelns texts rotation och centrerar den till mitten. Vi bestämde oss för att inte ändra storleken på datumen eftersom det blev oläsbart när dem var för stora
-  # Den ändrar också på y axelns rotation, storlek, och centrering
-  # vi ändrar också storleken på legendens titel, som i detta fall är "Plats"
-  # Tillsammans med legend-texten "som i detta fall är "Stockholm", och "Östergötland"
-  # Det sista vi ändrar i theme är legend key size, som är de små fyrkanterna där färgerna för linjerna ritas.
-  # denna skala använder sig av en statisk 0.75cm storlek, detta kan vara problematiskt om man ska visa grafen på en väldigt stor skärm
+  # Theme raderna Ã¤ndrar attributerna fÃ¶r x axelns texts rotation och centrerar den till mitten. Vi bestÃ¤mde oss fÃ¶r att inte Ã¤ndra storleken pÃ¥ datumen eftersom det blev olÃ¤sbart nÃ¤r dem var fÃ¶r stora
+  # Den Ã¤ndrar ocksÃ¥ pÃ¥ y axelns rotation, storlek, och centrering
+  # vi Ã¤ndrar ocksÃ¥ storleken pÃ¥ legendens titel, som i detta fall Ã¤r "Plats"
+  # Tillsammans med legend-texten "som i detta fall Ã¤r "Stockholm", och "Ã–stergÃ¶tland"
+  # Det sista vi Ã¤ndrar i theme Ã¤r legend key size, som Ã¤r de smÃ¥ fyrkanterna dÃ¤r fÃ¤rgerna fÃ¶r linjerna ritas.
+  # denna skala anvÃ¤nder sig av en statisk 0.75cm storlek, detta kan vara problematiskt om man ska visa grafen pÃ¥ en vÃ¤ldigt stor skÃ¤rm
 
-geom_line() + # denna rad ritar ut grafen
-  scale_x_date(date_breaks = "2 weeks", date_labels = "%Y-%m-%d", name = "Datum") #
-#denna rad ändrar ticksen för x skalan så att den visar datum för varannan vecka i formatet YYYY-MM-DD
-#den ändrar också namnet för x axeln så att den är "Datum
+geom_line() +  # denna rad ritar ut grafen
+  scale_x_date(date_breaks = "3 weeks", date_labels = "%Y-%m-%d", name = "Datum") #
+#denna rad Ã¤ndrar ticksen fÃ¶r x skalan sÃ¥ att den visar datum fÃ¶r varannan vecka i formatet YYYY-MM-DD
+#den Ã¤ndrar ocksÃ¥ namnet fÃ¶r x axeln sÃ¥ att den Ã¤r "Datum
+  
+  
