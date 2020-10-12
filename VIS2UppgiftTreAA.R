@@ -44,7 +44,10 @@ ggplot(data = data,
                                     size = 14),
         legend.title = element_text(size = 14,),
         legend.text = element_text(size = 14),
-        legend.key.size = unit(0.75, "cm")
+        legend.key.size = unit(0.75, "cm"),
+        plot.caption = element_text(hjust = 0, face = "italic"),
+        plot.subtitle = element_text(face = "italic"),
+        plot.title = element_text(face = "bold") # detta ändrar typsnittet för titel, footnote, och subtitle. Samt lägger footnoten på vänster sida
   ) +
   
   # Theme raderna ändrar attributerna för x axelns texts rotation och centrerar den till mitten. Vi bestämde oss för att inte ändra storleken på datumen eftersom det blev oläsbart när dem var för stora
@@ -53,10 +56,9 @@ ggplot(data = data,
   # Tillsammans med legend-texten "som i detta fall är "Stockholm", och "Östergötland"
   # Det sista vi ändrar i theme är legend key size, som är de små fyrkanterna där färgerna för linjerna ritas.
   # denna skala använder sig av en statisk 0.75cm storlek, detta kan vara problematiskt om man ska visa grafen på en väldigt stor skärm
-
-geom_line() +  # denna rad ritar ut grafen
+  
+  geom_line() +  # denna rad ritar ut grafen
   scale_x_date(date_breaks = "3 weeks", date_labels = "%Y-%m-%d", name = "Datum") #
 #denna rad ändrar ticksen för x skalan så att den visar datum för varannan vecka i formatet YYYY-MM-DD
 #den ändrar också namnet för x axeln så att den är "Datum
-  
-  
+
