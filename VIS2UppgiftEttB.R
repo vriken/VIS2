@@ -9,8 +9,8 @@ ggplot(data, aes(x = Alder, y = Lon)) + # här skapar vi ett ggplot objekt med d
   # ropar vi på en funktion geom_point som skapar ett scatter plot objekt och sätter punkterna i detta objekt till 2.5
   #vi använder oss även av se = FALSE, som går att fårtroendebanden inte visas. Vi använder också en implicit praxisformel (formula = y ~ x)
   #detta skapar regressionslinjen får som säger att y är beroende av x, som är den oberoende variabeln, eftersom den är på höger sida av ~. Vi definerar också aestheticen får color som "A", detta kommer att användas senare
-  geom_smooth(data = data, method = lm, se = FALSE, formula = y ~ x, aes(color = "Med extremvÃ¤rden")) + # här skapar vi den andra regressionslinjen med metoden lm som står får linear model. Denna metod skapar en standard regressionsmodell.
-  geom_smooth(data = withoutOutliers, method = lm, se = FALSE, formula = y ~ x, aes(color = "Utan extremvÃ¤rden")) +
+  geom_smooth(data = data, method = lm, se = FALSE, formula = y ~ x, aes(color = "Med extremvärden")) + # här skapar vi den andra regressionslinjen med metoden lm som står får linear model. Denna metod skapar en standard regressionsmodell.
+  geom_smooth(data = withoutOutliers, method = lm, se = FALSE, formula = y ~ x, aes(color = "Utan extremvärden")) +
   geom_point(size = 2.5) +
   # i den andra geom_smoothen går vi en exakt likadan smooth som i raden över, fårutom att den använder sig av data
   # som inte inkluderar extremvärdet 57564
@@ -24,7 +24,10 @@ ggplot(data, aes(x = Alder, y = Lon)) + # här skapar vi ett ggplot objekt med d
        caption = "Källa: Utdrag från lönedatabasen på NotReal AB") +
   #i labs så definerar vi namn får x-axeln, y-axeln, titeln, subtiteln, och footnoten.
   theme(axis.title.y = element_text(angle = 0, hjust = 0, vjust = 0.7),
+        axis.text.y = element_text(size = 11),
+        axis.text.x = element_text(size = 11),
+        legend.text = element_text(size = 11), 
         plot.title = element_text(size = 15, hjust = 0, face = "bold", color = "maroon", vjust = -0.5),
         plot.subtitle = element_text(size = 9, hjust = 0, face = "italic", color = "chocolate1"),
         plot.caption = element_text(size = 10, hjust = 0, face = "italic", color = "navy"))
-  #i theme definerar vi lite grafiska egenskaper får axlarnas, och titlarnas utseende, b.la vinkel, centrering, färg osv.
+#i theme definerar vi lite grafiska egenskaper får axlarnas, och titlarnas utseende, b.la vinkel, centrering, färg osv.
